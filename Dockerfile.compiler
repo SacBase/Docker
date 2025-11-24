@@ -35,20 +35,20 @@ RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/
  && sac2c -V
 
 # Build and install the standard library
-RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git sac-stdlib \
- && cd sac-stdlib && mkdir build && cd build \
+RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git \
+ && cd Stdlib && mkdir build && cd build \
  && cmake -DBUILD_EXT=ON -DLINKSETSIZE=200 .. \
  && make -j4
 
 # Build and install SDL library
-RUN git clone --recursive --single-branch https://github.com/SacBase/SDL.git sac-sdl \
- && cd sac-sdl && mkdir build && cd build \
+RUN git clone --recursive --single-branch https://github.com/SacBase/SDL.git \
+ && cd SDL && mkdir build && cd build \
  && cmake .. \
  && make -j4
 
 # Build and install energy measuring library
-RUN git clone --recursive --single-branch https://github.com/SacBase/sac-energy.git \
- && cd sac-energy && mkdir build && cd build \
+RUN git clone --recursive --single-branch https://github.com/SacBase/Energy.git \
+ && cd Energy && mkdir build && cd build \
  && cmake .. \
  && make -j4
 
