@@ -34,10 +34,10 @@ RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git 
  && make -j4
 
 # Install SaC Jupyter kernel
-RUN git clone --single-branch https://github.com/SacBase/sac-jupyter.git \
- && cd sac-jupyter \
+RUN git clone --single-branch https://github.com/SacBase/JupyterKernel.git \
+ && cd JupyterKernel \
  && mkdir -p /home/$NB_USER/.local/share/jupyter/kernels/sac \
- && echo "{\"argv\": [\"python3\", \"/home/$NB_USER/sac-jupyter/kernel.py\", \"-f\", \"{connection_file}\"], \"display_name\": \"SaC\", \"language\": \"sac\" }" \
+ && echo "{\"argv\": [\"python3\", \"/home/$NB_USER/JupyterKernel/kernel.py\", \"-f\", \"{connection_file}\"], \"display_name\": \"SaC\", \"language\": \"sac\" }" \
   > /home/$NB_USER/.local/share/jupyter/kernels/sac/kernel.json \
  && cp sac/kernel.js /home/$NB_USER/.local/share/jupyter/kernels/sac \
  && chown -R $NB_USER:users /home/$NB_USER
