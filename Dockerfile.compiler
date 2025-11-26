@@ -43,15 +43,13 @@ RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git 
 
 # Build and install SDL library
 RUN git clone --recursive --single-branch https://github.com/SacBase/SDL.git \
- && cd SDL && mkdir build && cd build \
- && cmake .. \
- && make -j4
+ && cd SDL \
+ && make
 
 # Build and install energy measuring library
 RUN git clone --recursive --single-branch https://github.com/SacBase/Energy.git \
- && cd Energy && mkdir build && cd build \
- && cmake .. \
- && make -j4
+ && cd Energy \
+ && make
 
 # Copy .sac2crc to home directory
 RUN cp -r /root/.sac2crc /home/.sac2crc
