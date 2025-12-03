@@ -17,8 +17,6 @@ RUN apt update \
   openmpi-bin \
   libopenmpi-dev \
   libhwloc-dev \
-  libsdl3-dev \
-  libx11-dev \
   uuid-runtime \
   uuid-dev \
   bison \
@@ -40,11 +38,6 @@ RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git 
  && cd Stdlib && mkdir build && cd build \
  && cmake -DBUILD_EXT=ON -DLINKSETSIZE=200 .. \
  && make -j4
-
-# Build and install SDL library
-RUN git clone --recursive --single-branch https://github.com/SacBase/SDL.git \
- && cd SDL \
- && make
 
 # Build and install energy measuring library
 RUN git clone --recursive --single-branch https://github.com/SacBase/Energy.git \
