@@ -17,7 +17,7 @@ RUN apt update \
   openmpi-bin \
   libopenmpi-dev \
   libhwloc-dev \
-  libsdl1.2-dev \
+  libsdl3-dev \
   libx11-dev \
   uuid-runtime \
   uuid-dev \
