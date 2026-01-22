@@ -20,8 +20,19 @@ docker pull sacbase/sac-jupyter-notebook
 And start the Jupyter notebook using:
 
 ```bash
-docker run -p 8888:8888 sacbase/sac-jupyter-notebook
+docker run --rm -p 8888:8888 sacbase/sac-jupyter-notebook
 ```
+
+To access an existing notebook on your system, you can use a bind mount.
+Open a terminal and change directory to where your existing notebook is.
+Then, run the following command:
+
+```bash
+docker run --rm -p 8888:8888 -v "$(pwd):/home/jovyan/work" sacbase/sac-jupyter-notebook
+```
+
+The `-v` option tells Docker to mount your current working directory to `/home/jovyan/work` inside the container.
+By default, the Jupyter image's root directory is `/home/jovyan` and you can only access or save notebooks to that directory in the container.
 
 After the container has started multiple URLs will be printed; use the one starting with `127.0.0.1:8888`.
 
