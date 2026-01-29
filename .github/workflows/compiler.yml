@@ -13,6 +13,7 @@ jobs:
   build:
     strategy:
       fail-fast: false
+      # https://docs.github.com/en/actions/how-tos/write-workflows/choose-where-workflows-run/choose-the-runner-for-a-job
       matrix:
         include:
         - platform: linux/amd64
