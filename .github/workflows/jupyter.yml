@@ -8,6 +8,7 @@ on:
 env:
   REGISTRY_IMAGE: sacbase/sac-jupyter-notebook
 
+# https://docs.docker.com/build/ci/github-actions/multi-platform/
 jobs:
   build:
     strategy:
