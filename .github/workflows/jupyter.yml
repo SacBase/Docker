@@ -17,7 +17,7 @@ jobs:
         - platform: linux/amd64
           runner: ubuntu-latest
         - platform: linux/arm64
-          runner: macos-latest
+          runner: ubuntu-24.04-arm
     runs-on: ${{ matrix.runner }}
     steps:
       - name: Prepare
@@ -52,6 +52,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ env.REGISTRY_IMAGE }}
+          file: "Dockerfile.jupyter"
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
