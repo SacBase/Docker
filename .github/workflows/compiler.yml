@@ -1,4 +1,4 @@
-name: docker
+name: Compiler
 
 on:
   workflow_dispatch:
