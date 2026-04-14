@@ -34,3 +34,12 @@ sudo docker run --rm -p 8888:8888 -v "$(pwd):/home/jovyan/work" sacbase/sac-jupy
 - `--rm` removes the container once it is done running.
 - `-v` tells Docker to mount your current working directory to `/home/jovyan/work` inside the container.
   The Jupyter image's root directory is `/home/jovyan` and you can only access or save notebooks to that directory in the container.
+
+
+## Updating the image
+
+To update the Docker image to the latest version, run:
+
+```bash
+sudo docker pull sacbase/sac-jupyter-notebook
+```
