@@ -41,5 +41,8 @@ sudo docker run --rm -p 8888:8888 -v "$(pwd):/home/jovyan/work" sacbase/sac-jupy
 To update the Docker image to the latest version, run:
 
 ```bash
-sudo docker pull sacbase/sac-jupyter-notebook
+sudo docker pull sacbase/sac-jupyter-notebook:latest
 ```
+
+We generate a fresh image every week.
+To pull or run a specific image, use `sacbase/sac-jupyter-notebook:yyyy-ww` instead, where `yyyy` is the year, and `ww` is the week number.
