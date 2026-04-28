@@ -14,7 +14,7 @@ Before you start, install [Docker](https://docs.docker.com/engine/install/) or [
 
 For first time users we recommend the interactive Jupyter Notebook environment.
 In a terminal, run the following command start the SaC Jupyter container.
-Multiple URLs will appear, open the one starting with `127.0.0.1`.
+Then, go to `localhost:8888` in your browser.
 
 ```bash
 sudo docker run -p 8888:8888 sacbase/sac-jupyter-notebook
