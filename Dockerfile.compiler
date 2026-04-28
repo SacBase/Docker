@@ -29,8 +29,10 @@ RUN apt update \
 # Build and install the SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git \
  && cd sac2c \
- && make release -j2 \
- && cp build_p/sac2c_p /usr/bin/sac2c \
+ && mkdir -p build_p && cd build_p \
+ && cmake -DCMAKE_BUILD_TYPE=RELEASE .. \
+ && make -j2 \
+ && cp sac2c_p /usr/bin/sac2c \
  && sac2c -V
 
 # Ensure linker cache is valid
@@ -38,7 +40,8 @@ RUN ldconfig
 
 # Build and install the standard library
 RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git \
- && cd Stdlib && mkdir build && cd build \
+ && cd Stdlib \
+ && mkdir build && cd build \
  && cmake -DBUILD_EXT=ON -DLINKSETSIZE=200 .. \
  && make -j4
 
