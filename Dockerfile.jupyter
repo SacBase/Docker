@@ -27,6 +27,9 @@ RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/
  && cp build_p/sac2c_p /usr/local/bin/sac2c \
  && sac2c -V
 
+# Ensure linker cache is valid
+RUN ldconfig
+
 # Build and install the standard library
 RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git \
  && cd Stdlib \
