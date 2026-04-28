@@ -1,4 +1,5 @@
-FROM jupyter/base-notebook
+# https://quay.io/repository/jupyter/minimal-notebook
+FROM quay.io/jupyter/minimal-notebook
 
 LABEL maintainer="SaC Development Team <info@sac-home.org>"
 
