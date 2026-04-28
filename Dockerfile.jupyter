@@ -18,6 +18,10 @@ RUN apt update \
  && apt autoclean \
  && apt --purge autoremove
 
+# Set an empty token for Jupyter to allow easy access
+# This enables direct access to http://127.0.0.1:8888 without having to append a complicated token
+ENV JUPYTER_TOKEN=""
+
 WORKDIR /home/$NB_USER
 
 # Build and install the SaC compiler
