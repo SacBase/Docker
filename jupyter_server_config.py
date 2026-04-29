@@ -368,7 +368,7 @@ c.PasswordIdentityProvider.token = ''
 
 ## The IP address the Jupyter server will listen on.
 #  Default: 'localhost'
-# c.ServerApp.ip = 'localhost'
+c.ServerApp.ip = 'localhost'
 
 ## Supply extra arguments that will be passed to Jinja environment.
 #  Default: {}
@@ -472,7 +472,7 @@ c.PasswordIdentityProvider.token = ''
 #                          module, unless it is overridden using the --browser
 #                          (ServerApp.browser) configuration option.
 #  Default: False
-c.ServerApp.open_browser = True
+c.ServerApp.open_browser = False
 
 ## DEPRECATED in 2.0. Use PasswordIdentityProvider.hashed_password
 #  Default: ''
@@ -516,7 +516,7 @@ c.ServerApp.open_browser = True
 
 ## The directory to use for notebooks and kernels.
 #  Default: ''
-# c.ServerApp.root_dir = ''
+c.ServerApp.root_dir = '/home/jovyan/work'
 
 ## The session manager class to use.
 #  Default: 'builtins.object'

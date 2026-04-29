@@ -5,8 +5,8 @@ LABEL maintainer="SaC Development Team <info@sac-home.org>"
 
 USER root
 
-RUN apt update \
- && apt install -y --no-install-recommends \
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
   build-essential \
   cmake \
   git \
@@ -14,13 +14,9 @@ RUN apt update \
   bison \
   flex \
   m4 \
- && apt clean \
- && apt autoclean \
- && apt --purge autoremove
-
-# Set an empty token for Jupyter to allow easy access
-# This enables direct access to http://127.0.0.1:8888 without having to append a complicated token
-ENV JUPYTER_SERVER_TOKEN=""
+ && apt-get clean \
+ && apt-get autoclean \
+ && apt-get --purge autoremove
 
 # Copy over Jupyter server configuration
 RUN mkdir -p /home/$NB_USER/.jupyter
