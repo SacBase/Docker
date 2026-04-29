@@ -354,7 +354,7 @@ c = get_config()  #noqa
 
 ## The identity provider class to use.
 #  Default: 'jupyter_server.auth.identity.PasswordIdentityProvider'
-c.ServerApp.identity_provider_class = 'jupyter_server.auth.identity.NoAuthIdentityProvider'
+c.ServerApp.identity_provider_class = 'jupyter_server.auth.identity.LegacyIdentityProvider'
 
 ## DEPRECATED. Use ZMQChannelsWebsocketConnection.iopub_data_rate_limit
 #  Default: 0.0
@@ -474,7 +474,7 @@ c.ServerApp.open_browser = True
 
 ## DEPRECATED in 2.0. Use PasswordIdentityProvider.hashed_password
 #  Default: ''
-# c.ServerApp.password = ''
+c.ServerApp.password = ''
 
 ## DEPRECATED in 2.0. Use PasswordIdentityProvider.password_required
 #  Default: False
@@ -572,7 +572,7 @@ c.ServerApp.open_browser = True
 
 ## DEPRECATED. Use IdentityProvider.token
 #  Default: '<DEPRECATED>'
-# c.ServerApp.token = '<DEPRECATED>'
+c.ServerApp.token = ''
 
 ## Supply overrides for the tornado.web.Application that the Jupyter server uses.
 #  Default: {}
