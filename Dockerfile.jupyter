@@ -20,7 +20,12 @@ RUN apt update \
 
 # Set an empty token for Jupyter to allow easy access
 # This enables direct access to http://127.0.0.1:8888 without having to append a complicated token
-ENV JUPYTER_TOKEN=""
+ENV JUPYTER_SERVER_TOKEN=""
+
+# Copy over Jupyter server configuration
+RUN mkdir -p /home/$NB_USER/.jupyter
+COPY jupyter_server_config.py /home/$NB_USER/.jupyter/jupyter_server_config.py
+RUN chown -R ${NB_UID}:${NB_GID} /home/$NB_USER/.jupyter
 
 WORKDIR /home/$NB_USER
 
