@@ -30,7 +30,7 @@ RUN apt-get update \
 # Build and install the SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git \
  && cd sac2c \
- && GENERATOR=Ninja make release -j4 \
+ && GENERATOR=Ninja make -j4 \
  && make symlink \
  && sac2c -V
 
