@@ -8,6 +8,7 @@ RUN apt-get update \
   linux-perf \
   build-essential \
   ca-certificates \
+  ninja-build \
   cmake \
   curl \
   git \
@@ -29,10 +30,10 @@ RUN apt-get update \
 # Build and install the SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git \
  && cd sac2c \
- && mkdir -p build_p && cd build_p \
- && cmake -DCMAKE_BUILD_TYPE=RELEASE .. \
- && make -j2 \
- && cp sac2c_p /usr/bin/sac2c \
+ && GENERATOR=Ninja make release -j4 \
+ && ln -s build_d/sac2c_d /usr/bin/sac2c_d \
+ && ln -s build_p/sac2c_p /usr/bin/sac2c_p \
+ && ln -s build_p/sac2c_p /usr/bin/sac2c \
  && sac2c -V
 
 # Ensure linker cache is valid
@@ -41,9 +42,8 @@ RUN ldconfig
 # Build and install the standard library
 RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git \
  && cd Stdlib \
- && mkdir build && cd build \
- && cmake -DBUILD_EXT=ON -DLINKSETSIZE=200 .. \
- && make -j4
+ && cmake -S . -B build -G Ninja -DLINKSETSIZE=200 \
+ && cmake --build build -j4
 
 # Build and install energy measuring library
 RUN git clone --recursive --single-branch https://github.com/SacBase/Energy.git \

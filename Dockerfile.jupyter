@@ -8,6 +8,7 @@ USER root
 RUN apt-get update \
  && apt-get install -y --no-install-recommends \
   build-essential \
+  ninja-build \
   cmake \
   git \
   xsltproc \
@@ -28,10 +29,8 @@ WORKDIR /home/$NB_USER
 # Build and install the SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git \
  && cd sac2c \
- && mkdir -p build_p && cd build_p \
- && cmake -DCMAKE_BUILD_TYPE=RELEASE .. \
- && make -j2 \
- && cp sac2c_p /usr/bin/sac2c \
+ && GENERATOR=Ninja make release -j4 \
+ && ln -s build_p/sac2c_p /usr/bin/sac2c \
  && sac2c -V
 
 # Ensure linker cache is valid
@@ -40,9 +39,8 @@ RUN ldconfig
 # Build and install the standard library
 RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git \
  && cd Stdlib \
- && mkdir build && cd build \
- && cmake -DTARGETS="seq;seq_checks" -DBUILD_EXT=OFF -DLINKSETSIZE=200 .. \
- && make -j4
+ && cmake -S . -B build -G Ninja -DTARGETS="seq;seq_checks" -DBUILD_EXT=OFF -DLINKSETSIZE=200 \
+ && cmake --build build -j4
 
 # Install SaC Jupyter kernel
 RUN git clone --single-branch https://github.com/SacBase/JupyterKernel.git \
