@@ -368,7 +368,7 @@ c.PasswordIdentityProvider.token = ''
 
 ## The IP address the Jupyter server will listen on.
 #  Default: 'localhost'
-# c.ServerApp.ip = 'localhost'
+c.ServerApp.ip = '0.0.0.0'
 
 ## Supply extra arguments that will be passed to Jinja environment.
 #  Default: {}
