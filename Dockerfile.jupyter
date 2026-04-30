@@ -30,7 +30,7 @@ WORKDIR /home/$NB_USER
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git \
  && cd sac2c \
  && GENERATOR=Ninja make release -j4 \
- && ln -s build_p/sac2c_p /usr/bin/sac2c \
+ && make symlink-release \
  && sac2c -V
 
 # Ensure linker cache is valid
