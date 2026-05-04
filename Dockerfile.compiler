@@ -33,9 +33,9 @@ RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/
  && GENERATOR=Ninja make -j4 \
  && cmake -S cmake/cpack -B build -G Ninja \
  && cmake --build build -j4 \
- && ln -s $(PWD)/build_d/sac2c_d /usr/local/bin/sac2c_d \
- && ln -s $(PWD)/build_p/sac2c_p /usr/local/bin/sac2c_p \
- && ln -s $(PWD)/build_p/sac2c_p /usr/local/bin/sac2c \
+ && ln -s $PWD/build_d/sac2c_d /usr/local/bin/sac2c_d \
+ && ln -s $PWD/build_p/sac2c_p /usr/local/bin/sac2c_p \
+ && ln -s $PWD/build_p/sac2c_p /usr/local/bin/sac2c \
  && sac2c -V
 
 # Ensure linker cache is valid
