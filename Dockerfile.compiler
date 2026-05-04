@@ -50,7 +50,7 @@ RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git 
 # Build and install energy measuring library
 RUN git clone --recursive --single-branch https://github.com/SacBase/Energy.git sac-energy \
  && cd sac-energy \
- && cmake -S . -B build -DTARGETS="seq;seq_checks;mt_pth" \
+ && cmake -S . -B build -G Ninja -DTARGETS="seq;seq_checks;mt_pth" \
  && cmake --build build
 
 # Copy .sac2crc to home directory
