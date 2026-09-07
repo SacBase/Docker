@@ -15,6 +15,7 @@ RUN apt-get update \
   numactl \
   python3 \
   xsltproc \
+  libsdl3-dev \
   openmpi-bin \
   libopenmpi-dev \
   libhwloc-dev \
