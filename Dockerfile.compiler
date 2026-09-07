@@ -16,6 +16,8 @@ RUN apt-get update \
   python3 \
   xsltproc \
   libsdl3-dev \
+  libsdl3-image-dev \
+  libsdl3-ttf-dev \
   openmpi-bin \
   libopenmpi-dev \
   libhwloc-dev \
