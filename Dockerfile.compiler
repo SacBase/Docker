@@ -30,12 +30,17 @@ RUN apt-get update \
  && apt-get autoclean \
  && apt-get --purge autoremove
 
+ENV SAC2CP_DIR=/sac2c/build/sac2c-release/src/sac2c-release-build
+ENV SAC2CD_DIR=/sac2c/build/sac2c-debug/src/sac2c-debug-build
+ENV SAC2CP_EXEC=${SAC2CP_DIR}/sac2c_p
+ENV SAC2CD_EXEC=${SAC2CD_DIR}/sac2c_d
+
 # Build and install the SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git sac2c \
  && cd sac2c \
  && cmake -S cmake/cpack -B build -G Ninja \
  && cmake --build build -j4 \
- && ls -s $PWD/build/sac2c-release/src/sac2c-release-build/sac2c_p /usr/local/bin/sac2c \
+ && ln -sf $SAC2CP_EXEC /usr/local/bin/sac2c \
  && sac2c -V
 
 # Ensure linker cache is valid
