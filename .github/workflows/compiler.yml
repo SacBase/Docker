@@ -62,6 +62,7 @@ jobs:
           file: Dockerfile.compiler
           build-args: |
             VARIANT=${{ matrix.variant }}
+          tags: ${{ env.REGISTRY_IMAGE }}:${{ matrix.variant == 'cpu' && 'latest' || 'cuda' }}
           outputs: type=image,push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
