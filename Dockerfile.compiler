@@ -44,7 +44,7 @@ ENV SAC2CD_EXEC=${SAC2CD_DIR}/sac2c_d
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git sac2c \
  && cd sac2c \
  && cmake -S cmake/cpack -B build -G Ninja -DBUILD_OPTIONS="-DCUDA=${SAC_CUDA}" \
- && cmake --build build --parallel \
+ && cmake --build build -j4 \
  && ln -sf $SAC2CP_EXEC /usr/local/bin/sac2c \
  && sac2c -V
 
@@ -55,13 +55,13 @@ RUN ldconfig
 RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git sac-stdlib \
  && cd sac-stdlib \
  && cmake -S . -B build -G Ninja -DTARGETS="${SAC_TARGETS}" -DBUILD_EXT=ON -DLINKSETSIZE=200 \
- && cmake --build build --parallel
+ && cmake --build build -j4
 
 # Build and install energy measuring library
 RUN git clone --recursive --single-branch https://github.com/SacBase/Energy.git sac-energy \
  && cd sac-energy \
  && cmake -S . -B build -G Ninja -DTARGETS="${SAC_TARGETS}" \
- && cmake --build build --parallel
+ && cmake --build build -j4
 
 # Copy .sac2crc to home directory
 RUN cp -r /root/.sac2crc /home/.sac2crc
