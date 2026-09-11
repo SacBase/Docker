@@ -1,4 +1,14 @@
-FROM debian:trixie-slim
+ARG VARIANT=cpu
+
+FROM ubuntu:24.04 AS cpu
+ENV SAC_TARGETS="seq;seq_checks;mt_pth"
+ENV SAC_CUDA=OFF
+
+FROM nvidia/cuda:13.3.1-devel-ubuntu24.04 AS cuda
+ENV SAC_TARGETS="seq;seq_checks;mt_pth;cuda"
+ENV SAC_CUDA=ON
+
+FROM ${VARIANT}
 
 LABEL maintainer="SaC Development Team <info@sac-home.org>"
 
@@ -25,10 +35,9 @@ RUN apt-get update \
   uuid-dev \
   bison \
   flex \
-  m4 \
- && apt-get clean \
- && apt-get autoclean \
- && apt-get --purge autoremove
+  m4
+# Delete local APT package index files
+RUN rm -rf /var/lib/apt/lists/*
 
 ENV SAC2CP_DIR=/sac2c/build/sac2c-release/src/sac2c-release-build
 ENV SAC2CD_DIR=/sac2c/build/sac2c-debug/src/sac2c-debug-build
@@ -38,8 +47,8 @@ ENV SAC2CD_EXEC=${SAC2CD_DIR}/sac2c_d
 # Build and install the SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git sac2c \
  && cd sac2c \
- && cmake -S cmake/cpack -B build -G Ninja \
- && cmake --build build -j4 \
+ && cmake -S cmake/cpack -B build -G Ninja -DBUILD_OPTIONS="-DCUDA=${SAC_CUDA}" \
+ && cmake --build build --parallel \
  && ln -sf $SAC2CP_EXEC /usr/local/bin/sac2c \
  && sac2c -V
 
@@ -49,14 +58,14 @@ RUN ldconfig
 # Build and install the standard library
 RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git sac-stdlib \
  && cd sac-stdlib \
- && cmake -S . -B build -G Ninja -DTARGETS="seq;seq_checks;mt_pth" -DBUILD_EXT=ON -DLINKSETSIZE=200 \
- && cmake --build build -j4
+ && cmake -S . -B build -G Ninja -DTARGETS="${SAC_TARGETS}" -DBUILD_EXT=ON -DLINKSETSIZE=200 \
+ && cmake --build build --parallel
 
 # Build and install energy measuring library
 RUN git clone --recursive --single-branch https://github.com/SacBase/Energy.git sac-energy \
  && cd sac-energy \
- && cmake -S . -B build -G Ninja -DTARGETS="seq;seq_checks;mt_pth" \
- && cmake --build build
+ && cmake -S . -B build -G Ninja -DTARGETS="${SAC_TARGETS}" \
+ && cmake --build build --parallel
 
 # Copy .sac2crc to home directory
 RUN cp -r /root/.sac2crc /home/.sac2crc
