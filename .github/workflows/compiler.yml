@@ -117,7 +117,7 @@ jobs:
             echo "IMAGE_TAG=${{ env.REGISTRY_IMAGE }}" >> $GITHUB_ENV
             echo "WEEKLY_IMAGE_TAG=${{ env.REGISTRY_IMAGE }}:${WEEKLY_TAG}" >> $GITHUB_ENV
           else
-            echo "IMAGE_TAG=${{ env.REGISTRY_IMAGE }}:cuda" >> $GITHUB_ENV
+            echo "IMAGE_TAG=${{ env.REGISTRY_IMAGE }}:cuda-latest" >> $GITHUB_ENV
             echo "WEEKLY_IMAGE_TAG=${{ env.REGISTRY_IMAGE }}:cuda-${WEEKLY_TAG}" >> $GITHUB_ENV
           fi
 
