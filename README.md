@@ -1,13 +1,15 @@
 [![build status](https://github.com/SacBase/sac-jupyter-notebook/workflows/docker/badge.svg)](https://github.com/SacBase/sac-jupyter-notebook/actions?query=workflow%3A"docker")
 [![docker pulls](https://img.shields.io/docker/pulls/sacbase/sac-jupyter-notebook)](https://hub.docker.com/r/sacbase/sac-jupyter-notebook)
 
-# SaC Docker
+SaC Docker
+==========
 
 This repository contains the base Dockerfiles used for compiling and running SaC programs.
 
 Pre-built Docker images are available on [DockerHub](https://hub.docker.com/u/sacbase).
 
-# SaC Compiler
+SaC Compiler
+============
 
 This Docker image provides everything needed to compile and run Single Assignment C (SaC) programs.
 You do not need to install SaC on your computer.
@@ -75,19 +77,8 @@ exit
 The Docker container is automatically removed.
 Files in the mounted directory are not deleted.
 
-## Updating the image
-
-To update the Docker image to the latest version, run:
-
-```bash
-sudo docker pull sacbase/sac-compiler:latest
-```
-
-We generate a fresh image every week.
-To pull or run a specific image, use `sacbase/sac-compiler:yyyy-ww` instead, where `yyyy` is the year and `ww` is the week number.
-A list of available versions is available on [Docker Hub](https://hub.docker.com/r/sacbase/sac-compiler).
-
-# SaC Jupyter Notebook
+SaC Jupyter Notebook
+====================
 
 This Docker image provides a ready-to-use Jupyter Notebook environment for SaC.
 You do not need to install SaC or Jupyter on your computer.
@@ -158,12 +149,12 @@ To start Jupyter again, run the command from step 1.
 
 ## Updating the image
 
+We generate a fresh image every week for both environments.
 To update the Docker image to the latest version, run:
 
 ```bash
-sudo docker pull sacbase/sac-jupyter-notebook:latest
+docker pull sacbase/sac-compiler:latest
 ```
 
-We generate a fresh image every week.
-To pull or run a specific image, use `sacbase/sac-jupyter-notebook:yyyy-ww` instead, where `yyyy` is the year, and `ww` is the week number.
-A list of available versions is available on [Docker Hub](https://hub.docker.com/r/sacbase/sac-jupyter-notebook).
+To pull or run a specific image, use `sacbase/sac-compiler:yyyy-ww` instead, where `yyyy` is the year, and `ww` is the week number.
+A list of available versions is available on [Docker Hub](https://hub.docker.com/u/sacbase).
