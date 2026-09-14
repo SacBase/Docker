@@ -6,7 +6,7 @@ SaC Docker
 
 This repository contains the base Dockerfiles used for compiling and running SaC programs.
 
-Pre-built Docker images are available on [DockerHub](https://hub.docker.com/u/sacbase).
+Pre-built Docker images are available on [Docker Hub](https://hub.docker.com/u/sacbase).
 
 SaC Compiler
 ============
