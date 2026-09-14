@@ -7,34 +7,154 @@ This repository contains the base Dockerfiles used for compiling and running SaC
 
 Pre-built Docker images are available on [DockerHub](https://hub.docker.com/u/sacbase).
 
-## Try out SaC interactively
+# SaC Compiler
 
-For an interactive, no-install experience, you can try out one of our docker images available through [GitHub](https://github.com/SacBase/Docker) or directly on [DockerHub](https://hub.docker.com/u/sacbase).
-Before you start, install [Docker](https://docs.docker.com/engine/install/) or [Docker desktop](https://docs.docker.com/desktop/setup/install/windows-install/) and make sure you can run the [hello world](https://hub.docker.com/_/hello-world/) example.
+This Docker image provides everything needed to compile and run Single Assignment C (SaC) programs.
+You do not need to install SaC on your computer.
 
-For first time users we recommend the interactive Jupyter Notebook environment.
-In a terminal, run the following command start the SaC Jupyter container.
-Then, go to `127.0.0.1:8888` in your browser.
+> We recommend using Docker from a terminal rather than using the Docker Desktop graphical interface. The commands below are all you need.
 
-```bash
-sudo docker run -p 8888:8888 sacbase/sac-jupyter-notebook
-```
+## 1. Start the SaC environment
 
-- `-p 8888:8888` maps port 8888 from the host to port 8888 on the container.
-
-Most likely you will want to access an existing notebook on your system.
-You can use a [bind mount](https://docs.docker.com/engine/storage/bind-mounts/) for this.
-Open a terminal and change directory to where your existing notebook is.
-Then, run the following command.
+From inside the folder where your SaC files are located, run:
 
 ```bash
-sudo docker run --rm -p 8888:8888 -v "$(pwd):/home/jovyan/work" sacbase/sac-jupyter-notebook
+docker run -it --rm \
+  -v "$PWD:/home" \
+  sacbase/sac-compiler:latest
 ```
 
-- `--rm` removes the container once it is done running.
-- `-v` tells Docker to mount your current working directory to `/home/jovyan/work` inside the container.
-  The Jupyter image's root directory is `/home/jovyan` and you can only access or save notebooks to that directory in the container.
+You are now inside the SaC environment.
+Your current directory on your computer (`PWD`) is now available under `/home`.
 
+> **Important:** Run all SaC programs from inside this Docker environment. The compiled programs need the SaC runtime libraries, which are installed in the container.
+
+### What does the Docker command do?
+
+* `-it` gives you an interactive terminal inside the container.
+* `--rm` automatically removes the container when you exit. Files in the mounted directory are not removed.
+* `-v "$PWD:/home"` mounts your current directory as `/home` inside the container. Files you create there are therefore stored on your computer.
+* `sacbase/sac-compiler:latest` specifies the Docker image to use.
+
+### Optional: Create an alias
+
+You can create an alias so you don't have to type the full Docker command every time:
+
+```bash
+alias saccompiler='docker run -it --rm -v "$PWD:/home" sacbase/sac-compiler:latest'
+```
+
+You can then start the SaC environment with:
+
+```bash
+saccompiler
+```
+
+The alias only lasts for the current terminal session.
+To make it permanent, add the `alias` command to your shell's configuration file, such as `~/.bashrc` or `~/.zshrc`.
+
+## 2. Compile and run
+
+Inside the container:
+
+```bash
+sac2c program.sac
+./a.out
+```
+
+The source files and generated files are stored in your normal directory on your computer because it is mounted as `/home`.
+
+## 3. Finish
+
+When you are done:
+
+```bash
+exit
+```
+
+The Docker container is automatically removed.
+Files in the mounted directory are not deleted.
+
+## Updating the image
+
+To update the Docker image to the latest version, run:
+
+```bash
+sudo docker pull sacbase/sac-compiler:latest
+```
+
+We generate a fresh image every week.
+To pull or run a specific image, use `sacbase/sac-compiler:yyyy-ww` instead, where `yyyy` is the year and `ww` is the week number.
+A list of available versions is available on [Docker Hub](https://hub.docker.com/r/sacbase/sac-compiler).
+
+# SaC Jupyter Notebook
+
+This Docker image provides a ready-to-use Jupyter Notebook environment for SaC.
+You do not need to install SaC or Jupyter on your computer.
+
+> We recommend using Docker from a terminal rather than using the Docker Desktop graphical interface. The commands below are all you need.
+
+## 1. Start the Jupyter environment
+
+From inside the folder where you want to store your notebooks, run:
+
+```bash
+docker run --rm -p 8888:8888 \
+  -v "$PWD:/home/jovyan/work" \
+  sacbase/sac-jupyter-notebook:latest
+```
+
+Jupyter will start and print in the console a URL containing a login token, for example:
+
+```text
+http://127.0.0.1:8888/tree?token=...
+```
+
+Open that URL in your web browser.
+
+### What does the Docker command do?
+
+* `--rm` automatically removes the container when you exit. Files in the mounted directory are not removed.
+* `-p 8888:8888` makes Jupyter's port 8888 available on your computer.
+* `-v "$PWD:/home/jovyan/work"` mounts your current directory as the `work` directory inside the container. Files you create there are therefore stored on your computer.
+* `sacbase/sac-jupyter-notebook:latest` specifies the Docker image to use.
+
+### Optional: Create an alias
+
+You can create an alias so you don't have to type the full Docker command every time:
+
+```bash
+alias sacjupyter='docker run --rm -p 8888:8888 -v "$PWD:/home/jovyan/work" sacbase/sac-jupyter-notebook:latest'
+```
+
+You can then start Jupyter with:
+
+```bash
+sacjupyter
+```
+
+The alias only lasts for the current terminal session.
+To make it permanent, add the `alias` command to your shell's configuration file, such as `~/.bashrc` or `~/.zshrc`.
+
+## 2. Create a SaC notebook
+
+In Jupyter, open the `work` directory.
+
+Create a new notebook and select the SaC kernel.
+You can now write and execute SaC code directly in the notebook.
+
+## 3. Finish
+
+When you are done, return to the terminal running Jupyter and press:
+
+```text
+Ctrl+C
+```
+
+The Docker container is automatically removed.
+Your notebooks and other files in the mounted directory are not deleted.
+
+To start Jupyter again, run the command from step 1.
 
 ## Updating the image
 
@@ -46,3 +166,4 @@ sudo docker pull sacbase/sac-jupyter-notebook:latest
 
 We generate a fresh image every week.
 To pull or run a specific image, use `sacbase/sac-jupyter-notebook:yyyy-ww` instead, where `yyyy` is the year, and `ww` is the week number.
+A list of available versions is available on [Docker Hub](https://hub.docker.com/r/sacbase/sac-jupyter-notebook).

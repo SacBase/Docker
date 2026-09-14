@@ -354,9 +354,10 @@ c = get_config()  #noqa
 
 ## The identity provider class to use.
 #  Default: 'jupyter_server.auth.identity.PasswordIdentityProvider'
-c.ServerApp.identity_provider_class = 'jupyter_server.auth.identity.PasswordIdentityProvider'
-c.PasswordIdentityProvider.hashed_password = ''
-c.PasswordIdentityProvider.token = ''
+## Uncomment the lines below to disable password and token authentication.
+# c.ServerApp.identity_provider_class = 'jupyter_server.auth.identity.PasswordIdentityProvider'
+# c.PasswordIdentityProvider.hashed_password = ''
+# c.PasswordIdentityProvider.token = ''
 
 ## DEPRECATED. Use ZMQChannelsWebsocketConnection.iopub_data_rate_limit
 #  Default: 0.0
