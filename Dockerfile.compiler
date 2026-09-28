@@ -65,3 +65,5 @@ RUN git clone --recursive --single-branch https://github.com/SacBase/Energy.git 
  && cd sac-energy \
  && cmake -S . -B build -G Ninja -DTARGETS="${SAC_TARGETS}" \
  && cmake --build build -j2
+
+WORKDIR /workspace
