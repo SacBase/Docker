@@ -36,7 +36,7 @@ RUN apt-get update \
 RUN rm -rf /var/lib/apt/lists/*
 
 # Create an unprivileged user.
-RUN useradd --create-home --shell /bin/bash sac
+RUN useradd --create-home --comment "SaC Development Team" --shell /bin/bash sac
 
 USER sac
 WORKDIR /home/sac
