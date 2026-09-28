@@ -54,14 +54,14 @@ RUN mkdir -p "/home/sac/.local/bin" \
  && ln -s "/home/sac/sac2c/build/sac2c_p" "/home/sac/.local/bin/sac2c" \
  && sac2c -V
 
-# # Build the standard library
-# RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git sac-stdlib \
-#  && cd sac-stdlib \
-#  && cmake -S . -B build -G Ninja -DTARGETS="${SAC_TARGETS}" -DBUILD_EXT=ON -DLINKSETSIZE=200 \
-#  && cmake --build build -j2
+# Build the standard library
+RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git sac-stdlib \
+ && cd sac-stdlib \
+ && cmake -S . -B build -G Ninja -DTARGETS="${SAC_TARGETS}" -DBUILD_EXT=ON -DLINKSETSIZE=200 \
+ && cmake --build build -j2
 
-# # Build energy measuring library
-# RUN git clone --recursive --single-branch https://github.com/SacBase/Energy.git sac-energy \
-#  && cd sac-energy \
-#  && cmake -S . -B build -G Ninja -DTARGETS="${SAC_TARGETS}" \
-#  && cmake --build build -j2
+# Build energy measuring library
+RUN git clone --recursive --single-branch https://github.com/SacBase/Energy.git sac-energy \
+ && cd sac-energy \
+ && cmake -S . -B build -G Ninja -DTARGETS="${SAC_TARGETS}" \
+ && cmake --build build -j2
