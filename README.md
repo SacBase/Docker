@@ -22,20 +22,21 @@ From inside the folder where your SaC files are located, run:
 
 ```bash
 docker run -it --rm \
-  -v "$PWD:/home" \
+  -v "$PWD:/workspace" -w workspace \
   sacbase/sac-compiler:latest
 ```
 
 You are now inside the SaC environment.
-Your current directory on your computer (`PWD`) is now available under `/home`.
+Your current directory on your computer (`PWD`) is now available under `/workspace`.
 
-> **Important:** Run all SaC programs from inside this Docker environment. The compiled programs need the SaC runtime libraries, which are installed in the container.
+> **Important:** Also run the compiled SaC programs from inside this Docker environment. The compiled programs need the SaC runtime libraries, which are installed in the container.
 
 ### What does the Docker command do?
 
 * `-it` gives you an interactive terminal inside the container.
 * `--rm` automatically removes the container when you exit. Files in the mounted directory are not removed.
-* `-v "$PWD:/home"` mounts your current directory as `/home` inside the container. Files you create there are therefore stored on your computer.
+* `-v "$PWD:/workspace"` mounts your current directory as `/workspace` inside the container. Files you create there are then stored on your computer.
+* `-w /workspace` starts the container in the `/workspace` directory rather than the default home directory.
 * `sacbase/sac-compiler:latest` specifies the Docker image to use.
 
 ### Optional: Create an alias

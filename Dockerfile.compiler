@@ -35,30 +35,33 @@ RUN apt-get update \
 # Delete local APT package index files
 RUN rm -rf /var/lib/apt/lists/*
 
-# Build and install the SaC compiler
+# Create an unprivileged user.
+RUN useradd --create-home --shell /bin/bash sac
+
+USER sac
+WORKDIR /home/sac
+ENV HOME=/home/sac
+
+# Build the SaC compiler
 RUN git clone --recursive --single-branch https://gitlab.sac-home.org/sac-group/sac2c.git sac2c \
  && cd sac2c \
  && cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=RELEASE \
- && cmake --build build -j4 \
- && ln -s $PWD/build/sac2c_p /usr/local/bin/sac2c \
+ && cmake --build build -j4
+
+ENV PATH="/home/sac/.local/bin:${PATH}"
+
+RUN mkdir -p "/home/sac/.local/bin" \
+ && ln -s "/home/sac/sac2c/build/sac2c_p" "/home/sac/.local/bin/sac2c" \
  && sac2c -V
 
-# Ensure linker cache is valid
-RUN ldconfig
+# # Build the standard library
+# RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git sac-stdlib \
+#  && cd sac-stdlib \
+#  && cmake -S . -B build -G Ninja -DTARGETS="${SAC_TARGETS}" -DBUILD_EXT=ON -DLINKSETSIZE=200 \
+#  && cmake --build build -j2
 
-# Build and install the standard library
-RUN git clone --recursive --single-branch https://github.com/SacBase/Stdlib.git sac-stdlib \
- && cd sac-stdlib \
- && cmake -S . -B build -G Ninja -DTARGETS="${SAC_TARGETS}" -DBUILD_EXT=ON -DLINKSETSIZE=200 \
- && cmake --build build -j2
-
-# Build and install energy measuring library
-RUN git clone --recursive --single-branch https://github.com/SacBase/Energy.git sac-energy \
- && cd sac-energy \
- && cmake -S . -B build -G Ninja -DTARGETS="${SAC_TARGETS}" \
- && cmake --build build -j2
-
-# Copy .sac2crc to home directory
-RUN cp -r /root/.sac2crc /home/.sac2crc
-
-WORKDIR /home
+# # Build energy measuring library
+# RUN git clone --recursive --single-branch https://github.com/SacBase/Energy.git sac-energy \
+#  && cd sac-energy \
+#  && cmake -S . -B build -G Ninja -DTARGETS="${SAC_TARGETS}" \
+#  && cmake --build build -j2
