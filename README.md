@@ -43,7 +43,7 @@ Your current directory on your computer (`PWD`) is now available under `/workspa
 You can create an alias so you don't have to type the full Docker command every time:
 
 ```bash
-alias saccompiler='docker run -it --rm -v "$PWD:/home" sacbase/sac-compiler:latest'
+alias saccompiler='docker run -it --rm -v "$PWD:/workspace" sacbase/sac-compiler:latest'
 ```
 
 You can then start the SaC environment with:
